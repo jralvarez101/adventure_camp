@@ -1,0 +1,19 @@
+/* Header Section */
+.header-container{
+    background-color:#f2edd7;
+}
+
+#logo{
+    max-height: 80px; 
+}
+
+.main-section{
+    height: 700px;
+    background-color: #3a6351;
+}
+
+#map{
+    height: 700px;
+    width: 100%;
+    margin-right: 0;
+}
