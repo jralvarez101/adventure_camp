@@ -1,49 +1,3 @@
-// Init Camp
-const campsites = new Campsites;
-
-
-
-// Init UI
-const ui = new UI;
-
-
-
-// On submit event listener to Search button
-document.getElementById('searchButton').addEventListener('click', async (event)=>{
-    console.log('search listener called')
-    // Search Input
-    event.preventDefault()
-    const stateSearch = document.getElementById('searchCampsite').value;
-    
-    
-    //Put Value of Search Text on getCampground and show data
-   
-    const campsiteData =  await campsites.getCampground(stateSearch)
-    
-
-    // console.log('campsite data: ', campsiteData);
-    
-    ui.showCampsite(campsiteData);
-    // campsiteData.then(data => {
-    //     console.log('this works');
-       
-    // });
-
-
-})
-
-
-
-
-
-
-
-
-
-
-// map info down below for now
-
-
 let map;
 
 function initMap() {
@@ -99,24 +53,3 @@ function addMarker(coords){
   
 
 }
-
-// magic scroll
-
-// function splitScroll(){
-
-//     const controller = new ScrollMagic.Controller();
-
-    
-//     var scene = new ScrollMagic.Scene({
-//         duration:"100%",
-//         triggerElement: ".display-section",
-//         triggerHook:0
-
-        
-//     })
-//     .setPin("#map")
-//     .addIndicators()
-//     .addTo(controller)
-// }
-
-// splitScroll();
