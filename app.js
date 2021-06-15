@@ -95,6 +95,9 @@ document.getElementById('searchButton').addEventListener('click', async (event)=
     // Search Input
     event.preventDefault()
 
+     currentPage = 1;
+     stateSearch = '';
+
     stateSearch = document.getElementById('searchCampsite').value;
 
     
@@ -110,6 +113,9 @@ document.getElementById('searchButton').addEventListener('click', async (event)=
     // Show only current campsites on the page
     ui.showCampsite(currentCampsites);
 
+    // Activate modal
+    ui.showModal(currentCampsites);
+
     // display pagination
     paginationDisplay(totalCampsites, campsitesPerPage);
 
@@ -119,15 +125,7 @@ document.getElementById('searchButton').addEventListener('click', async (event)=
 });
 
 
-
-
-
-
-
-
-
-
-// map info down below for now
+// ------------- map functionality for now ----------------------------------------------------
 
 let map;
 
@@ -163,10 +161,7 @@ function initMap(){
     }
 };
 
-
-
-
-// fixed map
+// fixed map positioning
 
 var fixmeTop = $('.fixed-map').offset().top;
 $(window).scroll(function() {
@@ -183,3 +178,13 @@ $(window).scroll(function() {
         });
     }
 });
+
+//----------------------  Modal functionality ------------------------------------------------------
+
+
+
+
+
+
+
+

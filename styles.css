@@ -31,7 +31,7 @@ p{
 
 .main-section{
     background-color: #f5f2eb;
-    height: 350vh;
+    height: 400vh;
    
 }
 
@@ -53,7 +53,7 @@ p{
 .main-card{
     background-color: white;
     border-bottom: 5px solid #3a6351;
-    max-height: 26rem;
+    max-height: 29rem;
     width: 19rem;
 }
 
@@ -73,7 +73,59 @@ p{
 
 /* add specific classes to the card at certain breakpoints  */
 .pagination-container{
-    background-color: #fff;
+    background-color: #f2edd7;
+}
+
+.footer {
+    min-height: 20rem;
+    background-image: url('./public/images/footerImage.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #f5f2eb;
+}
+
+.footer-logo{
+    max-height: 60px; 
+}
+
+.social-icons{
+    color: #E48257;
+    margin-left: 6px;
+}
+
+/* modal */
+.custom-modal{
+    display: none;
+    z-index: 1;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+
+}
+
+.custom-modal-content{
+    background-color:#f5f2eb ;
+    margin: 10% auto;
+    padding: 20px;
+    width: 70%;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.3),0 7px 20px rgba(0, 0, 0, 0.25);
+}
+
+.closeBtn{
+    color: #ccc;
+    float: right;
+    font-size: 30px;
+}
+
+.closeBtn:hover,.closeBtn:focus{
+    color: black;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 
