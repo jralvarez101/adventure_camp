@@ -110,16 +110,20 @@ p{
 
 .custom-modal-content{
     background-color:#f5f2eb ;
-    margin: 10% auto;
-    padding: 20px;
-    width: 70%;
+    margin:  auto;
+    padding: 5px;
+    width: 60%;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.3),0 7px 20px rgba(0, 0, 0, 0.25);
+    min-height: 100vh;
+    
 }
 
 .closeBtn{
     color: #ccc;
-    float: right;
     font-size: 30px;
+    position: relative;
+    left: 90%;
+    
 }
 
 .closeBtn:hover,.closeBtn:focus{
@@ -127,5 +131,84 @@ p{
     cursor: pointer;
     text-decoration: none;
 }
+
+.custom-modal-header{
+    background-color:#3a6351;
+    
+}
+
+.modal-image-top{
+    max-width: 100%;
+    /* margin-top: 3%; */
+}
+
+.modal-heading{
+    padding: 3% 3% 1%;
+}
+
+.modal-description{
+    padding: 0 3%;
+}
+
+.directions-title{
+    /* color:#8a8a8a; */
+    padding: 0 3%;
+}
+
+.directions{
+    padding: 3% 3% 1%;
+}
+
+.directions-div{
+    max-width: 50%;
+    padding: 3% 0 1%;
+}
+
+.directions-anchor{
+    padding: 3% 0 1%;
+}
+
+.passport-image{
+    max-width: 100%;
+    max-height: 50%;
+}
+
+@media (max-width: 500px) {
+    .center-modal-div {
+      flex-wrap: wrap;
+    }
+    .directions-div{
+        max-width: 100%;
+    }
+    .custom-modal-content{
+        width: 90%;
+    }
+    .passport-image{
+        max-height: 100%;
+    }
+  }
+
+  @media (max-width:780px) and (min-width:500px){
+      .passport-image{
+          max-height: 30%;
+      }
+  }
+
+.cost-heading{
+    padding: 3% 3% 1%;
+}
+
+
+
+.list-item{
+    color:#8a8a8a;
+    /* padding: 3% 3% 1%; */
+    list-style: none;
+    margin-top:3%;
+    font-weight: bold;
+
+}
+
+
 
 

@@ -114,7 +114,7 @@ document.getElementById('searchButton').addEventListener('click', async (event)=
     ui.showCampsite(currentCampsites);
 
     // Activate modal
-    ui.showModal(currentCampsites);
+    // ui.showModal(currentCampsites);
 
     // display pagination
     paginationDisplay(totalCampsites, campsitesPerPage);
