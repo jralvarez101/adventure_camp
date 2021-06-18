@@ -1,14 +1,10 @@
+
 class UI{
     
     constructor(){
         this.campground = document.getElementById('campground');
         this.myModalContent = document.getElementById('myModalContent');
         this.campsiteList = []
-        
-  
-        
-       
-
     }
     // Display campsite UI
     showCampsite(campsiteList){
@@ -24,7 +20,7 @@ class UI{
                 <div class="card-body d-flex flex-column justify-content-between">
                     <h5 class="card-title">${campsiteData.name}</h5>
                     <p class="card-text">${campsiteData.description}</p>
-                    <button  id="${campsiteData.id}" type="button" class="btn btn-outline-success btn-sm w-50 " >
+                    <button  id="${campsiteData.id}" type="button" class="btn btn-outline-success btn-sm w-50" >
                     Read More
                     </button>
                 </div>
@@ -33,18 +29,14 @@ class UI{
         });
 
         this.campground.innerHTML = output;
-        
-
-
-        this.addModalEventListeners(campsiteList)
-       
+        this.addModalEventListeners(campsiteList);
     }
+
 
      //------------------------------- Modal functionality -------------------------------
 
-     //First we create the modal
-
-   openModal=(event)=>{ 
+    // modal creation
+    openModal=(event)=>{ 
     const modal = document.getElementById('simpleModal');
       
         // This indicates what id was clicked on
@@ -58,7 +50,7 @@ class UI{
        <h1 class="modal-heading"> ${clickedOnCampsiteData?.name}</h1>
        <p class="modal-description">${clickedOnCampsiteData?.description}</p>
        <hr>
-       <div class="container-fluid d-flex center-modal-div">
+       <div class="container-fluid d-flex center-modal-div justify-content-around">
             <div class="directions-div">
                 <h3 class="directions-title">Directions</h3>
                 <p class="directions">${clickedOnCampsiteData?.directionsOverview}</p>
@@ -66,17 +58,21 @@ class UI{
                 <hr>
                 <h3 class="cost-heading">Fees:</h3>
                 <ul id="costDisplay"></ul>
+                <hr>
             </div>
-            <div class="d-flex justify-content-center">
-               
+            <div class="d-flex flex-column align-items-center justify-content-center weather-div">
+                <h3 class="weather-heading">Current Weather</h3>
+                    <div class="weather-background-div d-flex flex-column align-items-center justify-content-center">
+                        <img id="w-icon">
+                        <h3 class="text-dark" id="w-desc"></h3>
+                        <h3 id="w-string"></h3>
+                    </div>
             </div>
        </div>
-       
-       
        `
       console.log(this.myModalContent.innerHTML = modalOutput );
 
-      // Dynamically show fees
+      // ---------------  Dynamically show fees ----------------------------
 
       let costDisplay = '';
       clickedOnCampsiteData?.fees.forEach(fees =>{
@@ -88,9 +84,33 @@ class UI{
 
       document.getElementById('costDisplay').innerHTML = costDisplay;
 
-        //This opens displays the modal
+      // ---------------- Dynamically Show Weather ----------------------------
+      
+      // init weather
+      const weather = new Weather(clickedOnCampsiteData?.latitude,clickedOnCampsiteData?.longitude);
+
+      // init weather UI
+      const weatherUI = new WeatherUI();
+
+      getWeather();
+
+      // Calling the getWeather function will return a promise so we have to use .then and .catch
+      function getWeather(){
+         weather.getWeather()
+        .then(results => {
+            weatherUI.paint(results);
+        })
+        .catch( err => console.log(err));
+        }
+
+        // ---------------- This opens displays the modal --------------------------
         modal.style.display ='block';
    } 
+
+
+
+
+
 
     addModalEventListeners (campsiteList){
 
@@ -103,7 +123,6 @@ class UI{
 
         // listen for outside
         window.addEventListener('click', clickOutside)
-
 
         // listen for close click
         closeBtn.addEventListener('click', closeModal);
@@ -122,17 +141,11 @@ class UI{
         }
 
         // function to open Modal
-
-
         campsiteList.forEach(campsite => {
             const modalBtn = document.getElementById(campsite.id);
 
             modalBtn.addEventListener('click',this.openModal);
             
-
         })
-       
-        
     }
-  
 }

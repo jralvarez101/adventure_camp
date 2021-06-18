@@ -30,7 +30,7 @@
               </div>
             </div>
           </nav>
-          <div class="container search-container p-2 d-flex flex-row align-items-center">
+          <div class="container search-container p-2 d-flex flex-row flex-wrap align-items-center">
               <div class="">
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchCampsite">
@@ -71,9 +71,14 @@
       
               
               <!-- footer -->
-                <div class="footer d-flex justify-content-evenly">
+                <div class="footer d-flex flex-wrap justify-content-evenly">
                   <div class="mt-3">
                     <img class="footer-logo" src="./public/images/logo.png" alt="logo">
+                    <div class="mt-3 mobile-screen-icons">
+                      <i class="fab fa-facebook-f social-icons mt-3"></i>
+                      <i class="fab fa-instagram social-icons mt-3"></i>
+                      <i class="fab fa-twitter  social-icons mt-3"></i>
+                    </div>
                   </div>
                   <div class="mt-3">
                     <p class="ml-3 nav-text">
@@ -88,7 +93,7 @@
                           <a class="ml-3 contact-text" href="tel:+15555551212">555-555-1212</a>
                     </div>
                   </div>
-                  <div class="mt-3">
+                  <div class="mt-3 non-mobile-screen-icons">
                     <i class="fab fa-facebook-f social-icons mt-3"></i>
                     <i class="fab fa-instagram social-icons mt-3"></i>
                     <i class="fab fa-twitter  social-icons mt-3"></i>
@@ -122,6 +127,8 @@
     <script async="false" defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8vNBi1cV9S1ePnbC7MQVM6alf7rfx4AM&callback=initMap"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.6/ScrollMagic.min.js" integrity="sha512-kDuUo39RGApdfHkM1WQL8Pg9BYtYGS5rD14AzePsD4SEaixw7v/ykAkLMdsSjuBCNFE6/FAP+WIHh6N6QZJl5w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.6/plugins/debug.addIndicators.min.js" integrity="sha512-hFyYiBIWCYSyo98oFGWjG5V8HEV4g5O2pxu0mzU8qIMC7lrrwtcKWoRDZcpRL0ywIIM2d/XsBJ9iXNLFf6kIgw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="weather.js"></script>
+    <script src="weatherUI.js"></script>
     <script src="campsites.js"></script>
     <script src="ui.js"></script>
     <script src="app.js"></script>
