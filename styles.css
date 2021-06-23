@@ -12,16 +12,14 @@ p{
     
 }
 
-.btn-container{
-    display: flex;
-    align-items: center;
-    height: 45px;
-    padding: 9px 7px;
-    font-size: 1rem;
-    background-color: #fff;
-    border: 1px solid #ebebeb;
-    border-radius: 2px;
-    cursor: pointer;
+.modal-header{
+    background-color:#3a6351;
+    max-height: 40px;
+    color:#f5f2eb;
+}
+
+.modal-body{
+    background-color:#f5f2eb ;
 }
 
 

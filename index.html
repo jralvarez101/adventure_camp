@@ -30,31 +30,71 @@
               </div>
             </div>
           </nav>
-          <div class="container search-container p-2 d-flex flex-row flex-wrap align-items-center">
-              <div class="">
-                <form class="d-flex">
+          <div class="container search-container p-2 d-flex align-items-center">
+              <div class="p-2">
+                <form class="d-flex ">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchCampsite">
                     <button class="btn btn-outline-success" type="submit" id="searchButton">Search</button>
                   </form>
               </div>
-              <div class="btn-container d-flex p-1 align-items-center ml-3">
-                  <div class="p-1">
-                    <i class="far fa-calendar"></i>
-                  </div>
-                  <span>
-                    Dates
-                  </span>
+              <div >
+                  <a  role="button" class="btn btn-outline-success" id="reserveButton">Reserve Campsite</a>
               </div>
-              <div class="btn-container d-flex p-1 align-items-center">
-                <div class="p-1">
-                  <i class="far fa-user"></i>
+              <!-- reservation modal -->
+              <div id="reserveModal" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header ">
+                            <h3 class="modal-title">Reserve a Campsite</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <form id="reserveForm">
+                                    <div class="row form-group">
+                                        <label class="col-form-label col-sm-6" for="numCampers">Number of Campers </label>
+                                        <div class="col">
+                                            <select class="form-select" name="numCampers" id="numCampers" required>
+                                                <option selected >Select...</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                            </select>
+                                         </div>
+                                    </div>
+                                    <div class="row form-group mt-2">
+                                        <label class="col-form-label col-sm-6" for="date">Date</label>
+                                        <div class="col ">
+                                            <input class="form-control" type="date" name="date" id="date" placeholder="date" required>
+                                        </div>   
+                                    </div>
+                                    <div class="row form-group mt-2">
+                                      <label class="col-form-label col-sm-6" for="campsiteName">Campsite Name</label>
+                                      <div class="col ">
+                                          <input class="form-control" type="text" name="campsiteName" id="campsiteName" 
+                                           placeholder=" Enter Campsite Name" required>
+                                          <div class="invalid-feedback">
+                                            Must be more than two characters long and cannot contain numbers or special characters
+                                          </div>
+                                      </div>   
+                                  </div>
+                                    </div>
+                                    <div class="col form-group mt-3">
+                                        <button class="btn btn-outline-secondary" type="submit">Cancel</button>
+                                        <button class="btn btn-outline-success" type="submit">Submit</button>
+                                    </div>
+                                </form> 
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <span>
-                  Guests
-                </span>
-               </div>
+            </div>
           </div>
       </div>
+
       <!-- Main Section ui -->
       <div class="container-fluid main-section ">
         <div class="row display-section g-2">
@@ -127,6 +167,7 @@
     <script async="false" defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8vNBi1cV9S1ePnbC7MQVM6alf7rfx4AM&callback=initMap"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.6/ScrollMagic.min.js" integrity="sha512-kDuUo39RGApdfHkM1WQL8Pg9BYtYGS5rD14AzePsD4SEaixw7v/ykAkLMdsSjuBCNFE6/FAP+WIHh6N6QZJl5w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.6/plugins/debug.addIndicators.min.js" integrity="sha512-hFyYiBIWCYSyo98oFGWjG5V8HEV4g5O2pxu0mzU8qIMC7lrrwtcKWoRDZcpRL0ywIIM2d/XsBJ9iXNLFf6kIgw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script src="map.js"></script> -->
     <script src="weather.js"></script>
     <script src="weatherUI.js"></script>
     <script src="campsites.js"></script>

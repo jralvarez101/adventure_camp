@@ -2,7 +2,7 @@ class Map{
 
   constructor(){
     this.mapLocation = document.getElementById("map");
-
+    this.map = map;
 
   }
 

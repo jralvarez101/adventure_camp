@@ -70,7 +70,8 @@ class UI{
             </div>
        </div>
        `
-      console.log(this.myModalContent.innerHTML = modalOutput );
+      
+       this.myModalContent.innerHTML = modalOutput;
 
       // ---------------  Dynamically show fees ----------------------------
 

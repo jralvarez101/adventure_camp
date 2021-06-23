@@ -4,6 +4,9 @@ const campsites = new Campsites;
 // Init UI
 const ui = new UI;
 
+//Init googleMaps
+const googleMap = new Map;
+
 
 
 
@@ -78,6 +81,9 @@ function paginationDisplay(totalCampsites, campsitesPerPage){
     // Show only current campsites on the page
     ui.showCampsite(currentCampsites);
 
+    // Place pins for current campsites on page (for map)
+    initMap(currentCampsites);
+
     // display pagination
     paginationDisplay(totalCampsites, campsitesPerPage);
 
@@ -98,12 +104,14 @@ document.getElementById('searchButton').addEventListener('click', async (event)=
      currentPage = 1;
      stateSearch = '';
 
-    stateSearch = document.getElementById('searchCampsite').value;
+    stateSearch = document.getElementById('searchCampsite').value.toUpperCase();
+    
 
     
     //Put Value of Search Text on getCampground and show data
     const campsiteData =  await campsites.getCampground(stateSearch)
     console.log('campsite data: ', campsiteData.data);
+    
 
     const currentCampsites = paginationInformation(campsiteData);
 
@@ -113,8 +121,16 @@ document.getElementById('searchButton').addEventListener('click', async (event)=
     // Show only current campsites on the page
     ui.showCampsite(currentCampsites);
 
+
+    // Place pins for current campsites on page (for map)
+    initMap(currentCampsites, stateSearch);
+
+
+
     // display pagination
     paginationDisplay(totalCampsites, campsitesPerPage);
+
+
 
     return stateSearch;
 
@@ -124,39 +140,72 @@ document.getElementById('searchButton').addEventListener('click', async (event)=
 
 // ------------- map functionality for now ----------------------------------------------------
 
-let map;
+// First load states and their coordinates
 
+async function loadStates(){
+    const response = await fetch("./states.json")
+    const data = await response.json();
 
-function initMap(){
+    // do stuff with data
+    
 
-    // latitude and longitude of my location
-    var myLatlng = new google.maps.LatLng(47.711611,-122.2925763);
+    console.log(data);
+    return data
 
+}
+
+// loadStates();
+
+// let map;
+
+// On first Load
+
+function initMap(currentCampsiteList){
+    // ---- Loading First Map Window based on search --------------
+    const statesObj = loadStates();
+    // console.log(statesObj);
+
+    // Washington State Map
+    var myLatlng = new google.maps.LatLng(47.7511,-120.7401);
 
     // Map Options
     var mapOptions = {
-    zoom: 10,
-    center: myLatlng
-    }
-
+        zoom: 6,
+        center: myLatlng,
+        mapTypeId: "terrain"
+        }
+     
     // Creating a new map
     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-    // call addMarker
-    addMarker(myLatlng);
-    addMarker({lat: 47.8107,lng: -122.3774});
+    // ---- Adding Markers to Map based on pagination -----
 
-    // Add marker function (to add several markers)
-    function addMarker(coords){
-            var marker = new google.maps.Marker({
-            position: coords,
-            title:"Home Campsite",
-            map:map,
-            body:"this is the spot to kick it",
+    addMarker();
+    
+    async function addMarker () {           
+        for (let i = 0; i < currentCampsiteList.length; i++){
+            const latitude = currentCampsiteList[i].latitude;
+            const longitude = currentCampsiteList[i].longitude;
             
-        });
+            
+            // insertCoords(coords);
+            
+            const latLng = new google.maps.LatLng(latitude, longitude);
+ 
+            new google.maps.Marker({
+                position: latLng,
+                map: map,
+              });  
+
+             
+        }  
+
     }
-};
+    
+   
+
+}
+
 
 // fixed map positioning
 
@@ -176,7 +225,32 @@ $(window).scroll(function() {
     }
 });
 
-//----------------------  Modal functionality ------------------------------------------------------
+// Reservation Modal
+
+$('#reserveButton').click(function(){
+    $('#reserveModal').modal('show');
+
+});
+
+// Modal validation
+
+document.getElementById('campsiteName').addEventListener('blur',validateCampsite);
+
+function validateCampsite(){
+    // first get value of name field
+    console.log('this works')
+    const campsiteName = document.getElementById('campsiteName');
+    const re = /^[A-Za-z\s]{2,}+$/;
+
+    // use test method
+    if(!re.test(campsiteName.value)){
+        campsiteName.classList.add('is-invalid');
+    } else {
+        campsiteName.classList.remove('is-invalid');
+    }
+}
+
+
 
 
 
