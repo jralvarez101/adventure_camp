@@ -94,6 +94,24 @@ p{
     margin-left: 6px;
 }
 
+
+/* map */
+.pinInfo{
+    max-width:125px;
+    box-sizing: border-box;
+}
+
+.pinImg{
+    width: 30%;
+    height: auto;
+}
+
+.pinText{
+    font-weight: bold;
+    max-width: 70%;
+    padding:5px;
+}
+
 /* modal */
 .custom-modal{
     display: none;
@@ -199,6 +217,7 @@ p{
     font-weight: bold;
 
 }
+
 
 @media (max-width: 500px) {
     .center-modal-div {

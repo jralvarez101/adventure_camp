@@ -96,6 +96,37 @@ function paginationDisplay(totalCampsites, campsitesPerPage){
 
 // --------------------- Event Listener Cards and pagination display ------------------------------
 
+// On Load --------------------
+window.addEventListener('DOMContentLoaded', async () => {
+    console.log('content has been loaded')
+
+    currentPage = 1;
+    stateSearch = 'wa';
+
+    //Put Value of Search Text on getCampground and show data
+    const campsiteData =  await campsites.getCampground(stateSearch)
+    console.log('campsite data: ', campsiteData.data);
+
+    const currentCampsites = paginationInformation(campsiteData);
+
+    // Total amount of campsites
+    const totalCampsites = campsiteData.data.length;
+
+    // Show only current campsites on the page
+    ui.showCampsite(currentCampsites);
+
+    // Place pins for current campsites on page (for map)
+    initMap(currentCampsites, stateSearch);
+
+    // display pagination
+    paginationDisplay(totalCampsites, campsitesPerPage);
+
+    console.log(stateSearch);
+
+    return stateSearch;
+
+});
+
 document.getElementById('searchButton').addEventListener('click', async (event)=>{
    
     // Search Input
@@ -122,8 +153,6 @@ document.getElementById('searchButton').addEventListener('click', async (event)=
 
     // Place pins for current campsites on page (for map)
     initMap(currentCampsites, stateSearch);
-
-
 
     // display pagination
     paginationDisplay(totalCampsites, campsitesPerPage);
@@ -154,7 +183,7 @@ let map;
 // On first Load
 
 async function initMap(currentCampsiteList,stateSearch){
-
+    console.log(currentCampsiteList);
   
     const coordinates = {latitude:47.7511, longitude: -120.7401 }
     // ---- Loading First Map Window based on search --------------
@@ -188,18 +217,49 @@ async function initMap(currentCampsiteList,stateSearch){
     
      function addMarker () {           
         for (let i = 0; i < currentCampsiteList.length; i++){
+            // Get variables
             const latitude = currentCampsiteList[i].latitude;
             const longitude = currentCampsiteList[i].longitude;
+            const image = currentCampsiteList[i].images[0].url;
+            const name = currentCampsiteList[i].name;
             
             
             // insertCoords(coords);
-            
             const latLng = new google.maps.LatLng(latitude, longitude);
- 
-            new google.maps.Marker({
+
+            var marker = new google.maps.Marker({
                 position: latLng,
                 map: map,
               });  
+
+              var contentString = `
+              <div class="d-flex pinInfo">
+              <img class="pinImg" src="${image}">
+              <p class="pinText">${name}</p>
+              </div>`
+
+              marker.infoWindow = infoWindow
+
+            var infoWindow = new google.maps.InfoWindow({
+                content: contentString
+                
+            })
+            // Open infoWindow
+
+            marker.addListener('mouseover', function(){
+                return this.infoWindow.open(map, this);
+            })
+
+            // Close infoWindow
+            marker.addListener('mouseout', function(){
+                return this.infoWindow.close(map, this);
+            })
+
+            // Open modal on click
+            // marker.addListener('click', function(){
+            //     return this.infoWindow.open(map, this);
+            // })
+
 
              
         }  
