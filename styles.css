@@ -120,10 +120,12 @@ p{
 
 .closeBtn{
     color: #ccc;
-    font-size: 30px;
+    font-size: 18px;
     /* position: relative; */
-    /* left: 90%; */
-    
+    /* left: 70%; */
+    /* top:2%; */
+   padding-left: 10px;
+   padding-bottom:5px;
     
 }
 
@@ -131,16 +133,18 @@ p{
     color: black;
     cursor: pointer;
     text-decoration: none;
+    
 }
 
 .custom-modal-header{
     background-color:#3a6351;
+    height: 25px;
     
 }
 
 .modal-image-top{
-    max-width: 100%;
-    height: auto;
+    width: 100%;
+
 }
 
 .modal-heading{

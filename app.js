@@ -174,7 +174,7 @@ async function initMap(currentCampsiteList,stateSearch){
 
     // Map Options
     var mapOptions = {
-        zoom: 7,
+        zoom: 6,
         center: myLatlng,
         mapTypeId: "terrain"
         }
