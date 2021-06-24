@@ -82,7 +82,7 @@ function paginationDisplay(totalCampsites, campsitesPerPage){
     ui.showCampsite(currentCampsites);
 
     // Place pins for current campsites on page (for map)
-    initMap(currentCampsites);
+    initMap(currentCampsites, stateSearch);
 
     // display pagination
     paginationDisplay(totalCampsites, campsitesPerPage);
@@ -102,11 +102,9 @@ document.getElementById('searchButton').addEventListener('click', async (event)=
     event.preventDefault()
 
      currentPage = 1;
-     stateSearch = '';
+     stateSearch = 'wa';
 
     stateSearch = document.getElementById('searchCampsite').value.toUpperCase();
-    
-
     
     //Put Value of Search Text on getCampground and show data
     const campsiteData =  await campsites.getCampground(stateSearch)
@@ -130,7 +128,7 @@ document.getElementById('searchButton').addEventListener('click', async (event)=
     // display pagination
     paginationDisplay(totalCampsites, campsitesPerPage);
 
-
+    console.log(stateSearch);
 
     return stateSearch;
 
@@ -142,35 +140,41 @@ document.getElementById('searchButton').addEventListener('click', async (event)=
 
 // First load states and their coordinates
 
+
 async function loadStates(){
     const response = await fetch("./states.json")
-    const data = await response.json();
-
-    // do stuff with data
-    
-
-    console.log(data);
-    return data
+    const stateCoords = await response.json();
+    return stateCoords
 
 }
 
-// loadStates();
 
-// let map;
+let map;
 
 // On first Load
 
-function initMap(currentCampsiteList){
+async function initMap(currentCampsiteList,stateSearch){
+
+  
+    const coordinates = {latitude:47.7511, longitude: -120.7401 }
     // ---- Loading First Map Window based on search --------------
-    const statesObj = loadStates();
-    // console.log(statesObj);
+   const stateCoordinates = await loadStates()
+
+   const selectedStateCoordinates = stateCoordinates.find(x => x.state === stateSearch)
+
+   if(selectedStateCoordinates){
+       coordinates.latitude = selectedStateCoordinates.latitude
+       coordinates.longitude = selectedStateCoordinates.longitude
+   }
 
     // Washington State Map
-    var myLatlng = new google.maps.LatLng(47.7511,-120.7401);
+    const {longitude, latitude} = coordinates
+
+    var myLatlng = new google.maps.LatLng(latitude,longitude);
 
     // Map Options
     var mapOptions = {
-        zoom: 6,
+        zoom: 7,
         center: myLatlng,
         mapTypeId: "terrain"
         }
@@ -182,7 +186,7 @@ function initMap(currentCampsiteList){
 
     addMarker();
     
-    async function addMarker () {           
+     function addMarker () {           
         for (let i = 0; i < currentCampsiteList.length; i++){
             const latitude = currentCampsiteList[i].latitude;
             const longitude = currentCampsiteList[i].longitude;

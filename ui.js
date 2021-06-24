@@ -42,7 +42,7 @@ class UI{
         // This indicates what id was clicked on
         console.log('clicked on id: ',event.target.id)
        const clickedOnCampsiteData =  this.campsiteList?.find(campsite => campsite.id === event.target.id)
-       console.log('clicked on campsite data: ', clickedOnCampsiteData?.name)
+    //    console.log('clicked on campsite data: ', clickedOnCampsiteData?.name)
 
        let modalOutput = 
        `
