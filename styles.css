@@ -97,19 +97,23 @@ p{
 
 /* map */
 .pinInfo{
-    max-width:125px;
+    max-width:150px;
     box-sizing: border-box;
+    height: 55px;
+    
 }
 
 .pinImg{
     width: 30%;
-    height: auto;
+    height: 70%;
+    
 }
 
 .pinText{
     font-weight: bold;
     max-width: 70%;
-    padding:5px;
+    padding-left:5px;
+    
 }
 
 /* modal */

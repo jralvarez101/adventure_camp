@@ -167,6 +167,8 @@ document.getElementById('searchButton').addEventListener('click', async (event)=
 
 // ------------- map functionality for now ----------------------------------------------------
 
+
+
 // First load states and their coordinates
 
 
@@ -222,6 +224,9 @@ async function initMap(currentCampsiteList,stateSearch){
             const longitude = currentCampsiteList[i].longitude;
             const image = currentCampsiteList[i].images[0].url;
             const name = currentCampsiteList[i].name;
+            const campsiteId = currentCampsiteList[i].id;
+
+            console.log(campsiteId);
             
             
             // insertCoords(coords);
@@ -233,7 +238,7 @@ async function initMap(currentCampsiteList,stateSearch){
               });  
 
               var contentString = `
-              <div class="d-flex pinInfo">
+              <div class="d-flex pinInfo ">
               <img class="pinImg" src="${image}">
               <p class="pinText">${name}</p>
               </div>`
@@ -256,9 +261,9 @@ async function initMap(currentCampsiteList,stateSearch){
             })
 
             // Open modal on click
-            // marker.addListener('click', function(){
-            //     return this.infoWindow.open(map, this);
-            // })
+
+            
+           
 
 
              

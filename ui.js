@@ -8,6 +8,7 @@ class UI{
     }
     // Display campsite UI
     showCampsite(campsiteList){
+        console.log(campsiteList);
 
         let output = '';
 
@@ -115,7 +116,7 @@ class UI{
     addModalEventListeners (campsiteList){
 
         this.campsiteList = campsiteList
-        console.log(campsiteList);
+    
 
         const modal = document.getElementById('simpleModal');
 
