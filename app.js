@@ -235,7 +235,13 @@ async function initMap(currentCampsiteList,stateSearch){
             var marker = new google.maps.Marker({
                 position: latLng,
                 map: map,
+                id: campsiteId,
+                
+
               });  
+              console.log(marker.id);
+
+             
 
               var contentString = `
               <div class="d-flex pinInfo ">
@@ -262,6 +268,9 @@ async function initMap(currentCampsiteList,stateSearch){
 
             // Open modal on click
 
+            // marker.addListener('click', function(){
+            //     ui.openModal
+            // })
             
            
 

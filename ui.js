@@ -8,7 +8,6 @@ class UI{
     }
     // Display campsite UI
     showCampsite(campsiteList){
-        console.log(campsiteList);
 
         let output = '';
 
@@ -142,6 +141,7 @@ class UI{
         }
 
         // function to open Modal
+        // for each campsite i am making an event listener with the campsite id
         campsiteList.forEach(campsite => {
             const modalBtn = document.getElementById(campsite.id);
 
