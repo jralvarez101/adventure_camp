@@ -96,9 +96,10 @@ function paginationDisplay(totalCampsites, campsitesPerPage){
 
 // --------------------- Event Listener Cards and pagination display ------------------------------
 
-// On Load --------------------
-window.addEventListener('DOMContentLoaded', async () => {
-    console.log('content has been loaded')
+// On Load -------------------- 
+
+const onloadSearch =  async () => {
+
 
     currentPage = 1;
     stateSearch = 'wa';
@@ -121,11 +122,12 @@ window.addEventListener('DOMContentLoaded', async () => {
     // display pagination
     paginationDisplay(totalCampsites, campsitesPerPage);
 
-    console.log(stateSearch);
 
     return stateSearch;
 
-});
+};
+
+// ----------------- display when search is made --------------------------------
 
 document.getElementById('searchButton').addEventListener('click', async (event)=>{
    
@@ -133,7 +135,7 @@ document.getElementById('searchButton').addEventListener('click', async (event)=
     event.preventDefault()
 
      currentPage = 1;
-     stateSearch = 'wa';
+     stateSearch = '';
 
     stateSearch = document.getElementById('searchCampsite').value.toUpperCase();
     
@@ -156,8 +158,6 @@ document.getElementById('searchButton').addEventListener('click', async (event)=
 
     // display pagination
     paginationDisplay(totalCampsites, campsitesPerPage);
-
-    console.log(stateSearch);
 
     return stateSearch;
 
@@ -185,100 +185,108 @@ let map;
 // On first Load
 
 async function initMap(currentCampsiteList,stateSearch){
-    console.log(currentCampsiteList);
-  
-    const coordinates = {latitude:47.7511, longitude: -120.7401 }
-    // ---- Loading First Map Window based on search --------------
-   const stateCoordinates = await loadStates()
 
-   const selectedStateCoordinates = stateCoordinates.find(x => x.state === stateSearch)
-
-   if(selectedStateCoordinates){
-       coordinates.latitude = selectedStateCoordinates.latitude
-       coordinates.longitude = selectedStateCoordinates.longitude
-   }
-
-    // Washington State Map
-    const {longitude, latitude} = coordinates
-
-    var myLatlng = new google.maps.LatLng(latitude,longitude);
-
-    // Map Options
-    var mapOptions = {
-        zoom: 6,
-        center: myLatlng,
-        mapTypeId: "terrain"
-        }
-     
-    // Creating a new map
-    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-    // ---- Adding Markers to Map based on pagination -----
-
-    addMarker();
+    if (currentCampsiteList === undefined){
+        onloadSearch();
+    } else {
+        const coordinates = {latitude:47.7511, longitude: -120.7401 }
+        // ---- Loading First Map Window based on search --------------
+       const stateCoordinates = await loadStates()
     
-     function addMarker () {           
-        for (let i = 0; i < currentCampsiteList.length; i++){
-            // Get variables
-            const latitude = currentCampsiteList[i].latitude;
-            const longitude = currentCampsiteList[i].longitude;
-            const image = currentCampsiteList[i].images[0].url;
-            const name = currentCampsiteList[i].name;
-            const campsiteId = currentCampsiteList[i].id;
-
-            console.log(campsiteId);
-            
-            
-            // insertCoords(coords);
-            const latLng = new google.maps.LatLng(latitude, longitude);
-
-            var marker = new google.maps.Marker({
-                position: latLng,
-                map: map,
-                id: campsiteId,
+       const selectedStateCoordinates = stateCoordinates.find(x => x.state === stateSearch)
+    
+       if(selectedStateCoordinates){
+           coordinates.latitude = selectedStateCoordinates.latitude
+           coordinates.longitude = selectedStateCoordinates.longitude
+       }
+    
+        // Washington State Map
+        const {longitude, latitude} = coordinates
+    
+        var myLatlng = new google.maps.LatLng(latitude,longitude);
+    
+        // Map Options
+        var mapOptions = {
+            zoom: 6,
+            center: myLatlng,
+            mapTypeId: "terrain"
+            }
+         
+        // Creating a new map
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    
+        // ---- Adding Markers to Map based on pagination -----
+    
+         addMarker();
+        
+         function addMarker () {  
+    
+             console.log(currentCampsiteList);         
+            for (let i = 0; i < currentCampsiteList.length; i++){
+                // Get variables
+                const latitude = currentCampsiteList[i].latitude;
+                const longitude = currentCampsiteList[i].longitude;
+                const image = currentCampsiteList[i].images[0].url;
+                const name = currentCampsiteList[i].name;
+                const campsiteId = currentCampsiteList[i].id;
+    
+                // console.log(campsiteId); ------------important!
                 
-
-              });  
-              console.log(marker.id);
-
-             
-
-              var contentString = `
-              <div class="d-flex pinInfo ">
-              <img class="pinImg" src="${image}">
-              <p class="pinText">${name}</p>
-              </div>`
-
-              marker.infoWindow = infoWindow
-
-            var infoWindow = new google.maps.InfoWindow({
-                content: contentString
                 
-            })
-            // Open infoWindow
-
-            marker.addListener('mouseover', function(){
-                return this.infoWindow.open(map, this);
-            })
-
-            // Close infoWindow
-            marker.addListener('mouseout', function(){
-                return this.infoWindow.close(map, this);
-            })
-
-            // Open modal on click
-
-            // marker.addListener('click', function(){
-            //     ui.openModal
-            // })
-            
-           
-
-
-             
-        }  
-
+                // insertCoords(coords);
+                const latLng = new google.maps.LatLng(latitude, longitude);
+    
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map,
+                    id: campsiteId,
+                    
+    
+                  });  
+                //   console.log(marker.id);   ------------important!
+    
+                 
+    
+                  var contentString = `
+                  <div class="d-flex pinInfo ">
+                  <img class="pinImg" src="${image}">
+                  <p class="pinText">${name}</p>
+                  </div>`
+    
+                  marker.infoWindow = infoWindow
+    
+                var infoWindow = new google.maps.InfoWindow({
+                    content: contentString
+                    
+                })
+                // Open infoWindow
+    
+                marker.addListener('mouseover', function(){
+                    return this.infoWindow.open(map, this);
+                })
+    
+                // Close infoWindow
+                marker.addListener('mouseout', function(){
+                    return this.infoWindow.close(map, this);
+                })
+    
+                // Open modal on click
+    
+                // marker.addListener('click', function(){
+                //     ui.openModal
+                // })
+                
+               
+    
+    
+                 
+            }  
+    
+        }
     }
+  
+  console.log(currentCampsiteList);
+  
     
    
 
@@ -303,22 +311,47 @@ $(window).scroll(function() {
     }
 });
 
-// Reservation Modal
+// -------------------- Reservation Modal ----------------------------------
 
 $('#reserveButton').click(function(){
     $('#reserveModal').modal('show');
 
 });
 
-// Modal validation
+// -------- Modal Submission ---------------
+// get variables
 
-document.getElementById('campsiteName').addEventListener('blur',validateCampsite);
+const numCampers = document.getElementById('numCampers');
+const reservationDate = document.getElementById('date');
+const campsiteName = document.getElementById('campsiteName');
+var reserveModal = document.getElementById('reserveModal');
 
+
+document.getElementById('reserveForm').addEventListener('submit', function(e){
+    console.log('click event for submission works')
+    alert(`Your reservation for ${numCampers.value} campers on ${reservationDate.value}
+    for the ${campsiteName.value} campsite has been submitted`);
+    
+
+    e.preventDefault();
+});
+
+
+
+
+
+
+//---------- Modal validation  -------------
+
+document.getElementById('campsiteName').addEventListener('blur', validateCampsite);
+document.getElementById('date').addEventListener('blur', validateDate);
+
+// ---- campsite name validation --------
 function validateCampsite(){
     // first get value of name field
-    console.log('this works')
+    
     const campsiteName = document.getElementById('campsiteName');
-    const re = /^[A-Za-z\s]{2,}+$/;
+    const re = /^[A-Za-z_ ]{2,}$/;
 
     // use test method
     if(!re.test(campsiteName.value)){
@@ -327,6 +360,52 @@ function validateCampsite(){
         campsiteName.classList.remove('is-invalid');
     }
 }
+
+// ----- date validation---------
+
+function validateDate(){
+    const dateSelected = document.getElementById('date');
+    const dateSelectedValue = dateSelected.value;
+    const currentDate = new Date();
+    
+    // convert to milliseconds
+    let dateSelectedConverted = Date.parse(dateSelectedValue);
+    let currentDateConverted = currentDate.getTime();
+ 
+
+    if(dateSelectedConverted <= currentDateConverted){
+        dateSelected.classList.add('is-invalid');
+    } else {
+        dateSelected.classList.remove('is-invalid');
+    }
+
+}
+
+// ------------ search bar validation -----------
+//  document.getElementById('searchStateForm').addEventListener('submit', (e) => {
+//      e.preventDefault();
+//     console.log('submit form has been triggered');
+//  })
+
+
+
+
+// function validateSearchForm(){
+//     console.log('submit form has been triggered');
+
+    // const searchState = document.getElementById('searchCampsite');
+    // const re = /^[A-Za-z]{2}$/;
+
+    // if(!re.test(searchState.value)){
+    //     campsiteName.classList.add('is-invalid');
+    // } else {
+    //     campsiteName.classList.remove('is-invalid');
+    // }
+
+    // e.preventDefault();
+// }
+
+    
 
 
 
