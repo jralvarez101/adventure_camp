@@ -1,20 +1,15 @@
+class UI {
+  constructor() {
+    this.campground = document.getElementById("campground");
+    this.myModalContent = document.getElementById("myModalContent");
+    this.campsiteList = [];
+  }
+  // Display campsite UI
+  showCampsite(campsiteList) {
+    let output = "";
 
-class UI{
-    
-    constructor(){
-        this.campground = document.getElementById('campground');
-        this.myModalContent = document.getElementById('myModalContent');
-        this.campsiteList = []
-    }
-    // Display campsite UI
-    showCampsite(campsiteList){
-
-        let output = '';
-
-        campsiteList?.forEach(campsiteData => {
-        
-           output+=
-            `
+    campsiteList?.forEach((campsiteData) => {
+      output += `
             <div class="main-card mt-3">
                 <img src="${campsiteData.images[0].url}" alt="${campsiteData.images[0].altText}" class="card-img-top">
                 <div class="card-body d-flex flex-column justify-content-between">
@@ -25,26 +20,25 @@ class UI{
                     </button>
                 </div>
             </div>
-            `
-        });
+            `;
+    });
 
-        this.campground.innerHTML = output;
-        this.addModalEventListeners(campsiteList);
-    }
+    this.campground.innerHTML = output;
+    this.addModalEventListeners(campsiteList);
+  }
 
+  //------------------------------- Modal functionality -------------------------------
 
-     //------------------------------- Modal functionality -------------------------------
+  // modal creation
+  openModal = (event) => {
+    const modal = document.getElementById("simpleModal");
 
-    // modal creation
-    openModal=(event)=>{ 
-    const modal = document.getElementById('simpleModal');
-      
-        // This indicates what id was clicked on
-       const clickedOnCampsiteData =  this.campsiteList?.find(campsite => campsite.id === event.target.id)
+    // This indicates what id was clicked on
+    const clickedOnCampsiteData = this.campsiteList?.find(
+      (campsite) => campsite.id === event.target.id
+    );
 
-
-       let modalOutput = 
-       `
+    let modalOutput = `
        <img src="${clickedOnCampsiteData?.images[0].url}" alt="${clickedOnCampsiteData?.images[0].altText}" class="modal-image-top">
        <h1 class="modal-heading"> ${clickedOnCampsiteData?.name}</h1>
        <p class="modal-description">${clickedOnCampsiteData?.description}</p>
@@ -68,85 +62,79 @@ class UI{
                     </div>
             </div>
        </div>
-       `
-      
-       this.myModalContent.innerHTML = modalOutput;
+       `;
 
-      // ---------------  Dynamically show fees ----------------------------
+    this.myModalContent.innerHTML = modalOutput;
 
-      let costDisplay = '';
-      clickedOnCampsiteData?.fees.forEach(fees =>{
-        costDisplay +=
-        `
+    // ---------------  Dynamically show fees ----------------------------
+
+    let costDisplay = "";
+    clickedOnCampsiteData?.fees.forEach((fees) => {
+      costDisplay += `
         <li class="list-item"> $${fees.cost} for ${fees.title}</li>
-        `
-      });
+        `;
+    });
 
-      document.getElementById('costDisplay').innerHTML = costDisplay;
+    document.getElementById("costDisplay").innerHTML = costDisplay;
 
-      // ---------------- Dynamically Show Weather ----------------------------
-      
-      // init weather
-      const weather = new Weather(clickedOnCampsiteData?.latitude,clickedOnCampsiteData?.longitude);
+    // ---------------- Dynamically Show Weather ----------------------------
 
-      // init weather UI
-      const weatherUI = new WeatherUI();
+    // init weather
+    const weather = new Weather(
+      clickedOnCampsiteData?.latitude,
+      clickedOnCampsiteData?.longitude
+    );
 
-      getWeather();
+    // init weather UI
+    const weatherUI = new WeatherUI();
 
-      // Calling the getWeather function will return a promise so we have to use .then and .catch
-      function getWeather(){
-         weather.getWeather()
-        .then(results => {
-            weatherUI.paint(results);
+    getWeather();
+
+    // Calling the getWeather function will return a promise so we have to use .then and .catch
+    function getWeather() {
+      weather
+        .getWeather()
+        .then((results) => {
+          weatherUI.paint(results);
         })
-        .catch( err => console.log(err));
-        }
-
-        // ---------------- This opens displays the modal --------------------------
-        modal.style.display ='block';
-   } 
-
-
-
-
-
-
-    addModalEventListeners (campsiteList){
-
-        this.campsiteList = campsiteList
-    
-
-        const modal = document.getElementById('simpleModal');
-
-        const closeBtn = document.getElementsByClassName("closeBtn")[0];
-
-        // listen for outside
-        window.addEventListener('click', clickOutside)
-
-        // listen for close click
-        closeBtn.addEventListener('click', closeModal);
-
-        // function to close modal
-        function closeModal(){
-            modal.style.display = 'none';
-        }
-
-        // listen for outside
-        function clickOutside(e){
-            if(e.target == modal){
-                modal.style.display = 'none';
-            }
-            
-        }
-
-        // function to open Modal
-        // for each campsite i am making an event listener with the campsite id
-        campsiteList.forEach(campsite => {
-            const modalBtn = document.getElementById(campsite.id);
-
-            modalBtn.addEventListener('click',this.openModal);
-            
-        })
+        .catch((err) => console.log(err));
     }
+
+    // ---------------- This opens displays the modal --------------------------
+    modal.style.display = "block";
+  };
+
+  addModalEventListeners(campsiteList) {
+    this.campsiteList = campsiteList;
+
+    const modal = document.getElementById("simpleModal");
+
+    const closeBtn = document.getElementsByClassName("closeBtn")[0];
+
+    // listen for outside
+    window.addEventListener("click", clickOutside);
+
+    // listen for close click
+    closeBtn.addEventListener("click", closeModal);
+
+    // function to close modal
+    function closeModal() {
+      modal.style.display = "none";
+    }
+
+    // listen for outside
+    function clickOutside(e) {
+      if (e.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    // function to open Modal
+    // for each campsite i am making an event listener with the campsite id
+    campsiteList.forEach((campsite) => {
+      const modalBtn = document.getElementById(campsite.id);
+
+      modalBtn.addEventListener("click", this.openModal);
+    });
+  }
 }
