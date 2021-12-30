@@ -71,7 +71,7 @@ p {
 
 .footer {
   min-height: 20rem;
-  background-image: url("./images/footerimage.png");
+  background-image: url("/images/footerimg.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
